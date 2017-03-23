@@ -21,6 +21,11 @@ let repository = {
         return collectionPromise.then(function (collection) {
             return collection.find({}).maxTimeMS(1000).toArray()
         })
+    },
+    findOne: function (isbn) {
+        return collectionPromise.then(function (collection) {
+            return collection.find({"isbn": isbn}).limit(1).next();
+        })
     }
 };
 

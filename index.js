@@ -28,11 +28,22 @@ app.get('/stock', function (req, res, next) {
     }).catch(next)
 });
 
+app.get('/stock/:isbn', function (req, res, next) {
+    let isbn = req.param('isbn');
+    repository.findOne(isbn).then(function (entry) {
+        if (entry != null) {
+            res.json(entry);
+        } else {
+            return clientError(req, res, next);
+        }
+    }).catch(next)
+});
+
 app.post('/stock', function (req, res, next) {
     let isbn = req.body.isbn;
     let count = req.body.count;
 
-   repository.stockUp(isbn, count).then(function () {
+    repository.stockUp(isbn, count).then(function () {
         res.json({
             isbn: req.body.isbn,
             count: req.body.count
