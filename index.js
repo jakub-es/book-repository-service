@@ -1,12 +1,12 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
-var MongoClient = require('mongodb').MongoClient
+const MongoClient = require('mongodb').MongoClient
     , assert = require('assert');
 
 // Connection URL
-var url = 'mongodb://localhost:27017/books';
+const url = 'mongodb://localhost:27017/books';
 
 function logRequest(req, res, next) {
     console.log('incoming request at', new Date());
@@ -27,9 +27,23 @@ app.get('/', function (req, res) {
     res.send('Hello world');
 });
 
+app.get('/stock', function (req, res, next) {
+
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+
+        db.collection('books').find({}).toArray(function (err, docs) {
+            res.json(docs);
+        });
+        db.close();
+    });
+});
+
 app.post('/stock', function (req, res, next) {
-    var isbn = req.body.isbn;
-    var count = req.body.count;
+    let isbn = req.body.isbn;
+    let count = req.body.count;
+
     MongoClient.connect(url, function (err, db) {
         assert.equal(null, err);
         console.log("Connected successfully to server");
