@@ -45,8 +45,8 @@ app.post('/stock', function (req, res, next) {
     let count = req.body.count;
 
     collectionPromise.then(function (collection) {
-        return collection.updateOne({isbn}, {
-            isbn, count
+        return collection.updateOne({isbn:isbn}, {
+            isbn: isbn, count:count
         }, {upsert: true})
     }).then(function () {
         res.json({
