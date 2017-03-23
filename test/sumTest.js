@@ -1,7 +1,3 @@
-/**
- * Created by jaksta on 2017-03-23.
- */
-
 var assert = require('assert');
 var sum = require('./sum');
 
