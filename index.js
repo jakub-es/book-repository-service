@@ -27,38 +27,34 @@ app.get('/', function (req, res) {
     res.send('Hello world');
 });
 
-app.get('/stock', function (req, res, next) {
+var connectionPromise = MongoClient.connect(url);
+var collectionPromise = connectionPromise.then(function (db) {
+    return db.collection('books');
+});
 
-    MongoClient.connect(url, function (err, db) {
-        assert.equal(null, err);
-        console.log("Connected successfully to server");
-
-        db.collection('books').find({}).toArray(function (err, docs) {
-            res.json(docs);
-        });
-        db.close();
-    });
+app.get('/stock', function (req, res) {
+    collectionPromise.then(function (collection) {
+        return collection.find({}).toArray();
+    }).then(function (results) {
+        res.json(results);
+    })
 });
 
 app.post('/stock', function (req, res, next) {
     let isbn = req.body.isbn;
     let count = req.body.count;
 
-    MongoClient.connect(url, function (err, db) {
-        assert.equal(null, err);
-        console.log("Connected successfully to server");
-
-        db.collection('books').updateOne({isbn: isbn}, {
+    collectionPromise.then(function (collection) {
+        return collection.updateOne({isbn: isbn}, {
             isbn: isbn,
             count: count
         }, {upsert: true});
-        db.close();
+    }).then(function () {
+        res.json({
+            isbn: req.body.isbn,
+            count: req.body.count
+        });
     });
-
-    res.json({
-        isbn: req.body.isbn,
-        count: req.body.count
-    })
 });
 
 app.get('/error', function (res, req) {
