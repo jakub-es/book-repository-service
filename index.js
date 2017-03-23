@@ -27,17 +27,17 @@ app.get('/', function (req, res) {
     res.send('Hello world');
 });
 
-var connectionPromise = MongoClient.connect(url);
-var collectionPromise = connectionPromise.then(function (db) {
+let connectionPromise = MongoClient.connect(url);
+let collectionPromise = connectionPromise.then(function (db) {
     return db.collection('books');
 });
 
-app.get('/stock', function (req, res) {
+app.get('/stock', function (req, res, next) {
     collectionPromise.then(function (collection) {
-        return collection.find({}).toArray();
+        return collection.find({}).toArray()
     }).then(function (results) {
-        res.json(results);
-    })
+        res.json(results)
+    }).catch(next)
 });
 
 app.post('/stock', function (req, res, next) {
@@ -45,16 +45,15 @@ app.post('/stock', function (req, res, next) {
     let count = req.body.count;
 
     collectionPromise.then(function (collection) {
-        return collection.updateOne({isbn: isbn}, {
-            isbn: isbn,
-            count: count
-        }, {upsert: true});
+        return collection.updateOne({isbn}, {
+            isbn, count
+        }, {upsert: true})
     }).then(function () {
         res.json({
             isbn: req.body.isbn,
             count: req.body.count
         });
-    });
+    }).catch(next)
 });
 
 app.get('/error', function (res, req) {
