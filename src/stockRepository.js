@@ -6,7 +6,7 @@ module.exports = function () {
 
     let connectionPromise = MongoClient.connect(url);
     let collectionPromise = connectionPromise.then(function (db) {
-        return db.collection('books');
+        return db.collection('books-213-746-1216-421');
     });
 
     return {
