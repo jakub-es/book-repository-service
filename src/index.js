@@ -1,18 +1,9 @@
-module.exports = function (repositoryObject) {
-    const express = require('express');
-    const bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+
+module.exports = function (repository) {
+
     const app = express();
-    const repository = repositoryObject;
-
-    function logRequest(req, res, next) {
-        console.log('incoming request at', new Date());
-        next();
-    }
-
-    function auth(req, res, next) {
-        console.log("you can pass my auth");
-        next();
-    }
 
     app.use(logRequest);
     app.use(auth);
@@ -59,18 +50,28 @@ module.exports = function (repositoryObject) {
     app.use(clientError);
     app.use(serverError);
 
-    function clientError(req, res, next) {
-        var err = new Error('Not Found');
-        err.status = 404;
-        next(err);
-    }
-
-    function serverError(err, req, res, next) {
-        var status = err.status || 500;
-        res.status(status);
-        console.error(err.stack);
-        res.send('Oh no: ' + status);
-    }
-
     return app;
 };
+
+function clientError(req, res, next) {
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+}
+
+function serverError(err, req, res, next) {
+    let status = err.status || 500;
+    res.status(status);
+    console.error(err.stack);
+    res.send('Oh no: ' + status);
+}
+
+function logRequest(req, res, next) {
+    console.log('incoming request at', new Date());
+    next();
+}
+
+function auth(req, res, next) {
+    console.log("you can pass my auth");
+    next();
+}
