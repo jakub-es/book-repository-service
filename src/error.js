@@ -12,5 +12,5 @@ module.exports = function () {
             console.error(err.stack);
             res.send('Oh no: ' + status);
         }
-    }
+    };
 };

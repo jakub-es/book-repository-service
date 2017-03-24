@@ -15,13 +15,13 @@ module.exports = function () {
                 return collection.updateOne({isbn: isbn}, {
                     isbn: isbn,
                     count: count
-                }, {upsert: true})
-            })
+                }, {upsert: true});
+            });
         },
         findAll: function () {
             return collectionPromise.then(function (collection) {
-                return collection.find({}).maxTimeMS(1000).toArray()
-            })
+                return collection.find({}).maxTimeMS(1000).toArray();
+            });
         },
         getCount: function (isbn) {
             return collectionPromise.then(function (collection) {
@@ -32,7 +32,7 @@ module.exports = function () {
                 } else {
                     return null;
                 }
-            })
+            });
         }
     };
 };

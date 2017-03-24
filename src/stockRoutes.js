@@ -6,17 +6,17 @@ module.exports = function (repository) {
         getStock: function (req, res, next) {
             repository.findAll().then(function (results) {
                 return res.json(results);
-            }).catch(next)
+            }).catch(next);
         },
         getCount: function (req, res, next) {
             let isbn = req.param('isbn');
             repository.getCount(isbn).then(function (results) {
-                if (results != null) {
+                if (results !== null) {
                     return res.json(results);
                 } else {
                     next();
                 }
-            }).catch(next)
+            }).catch(next);
         },
         stockUp: function (req, res, next) {
             let isbn = req.body.isbn;
@@ -27,10 +27,10 @@ module.exports = function (repository) {
                     isbn: req.body.isbn,
                     count: req.body.count
                 });
-            }).catch(next)
+            }).catch(next);
         },
         forcedError: function (res, req) {
             throw new Error('forced error');
         }
-    }
+    };
 };
