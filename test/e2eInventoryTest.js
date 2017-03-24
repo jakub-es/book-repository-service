@@ -1,5 +1,6 @@
 const request = require('supertest');
-const app = require('./../src/index');
+const inMemoryRepository = require('./inMemoryRepository')();
+const app = require('./../src/index')(inMemoryRepository);
 
 describe('Book inventory', function () {
     it('allows to stock up the items', function (done) {
