@@ -13,7 +13,8 @@ let repository = {
     stockUp: function (isbn, count) {
         return collectionPromise.then(function (collection) {
             return collection.updateOne({isbn: isbn}, {
-                isbn: isbn, count: count
+                isbn: isbn,
+                count: count
             }, {upsert: true})
         })
     },
