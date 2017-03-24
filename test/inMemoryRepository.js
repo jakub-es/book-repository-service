@@ -1,12 +1,12 @@
 module.exports = function() {
-    var items = [];
+    let items = [];
 
     return {
         _items: function(state) {
             items = state;
         },
         stockUp: function (isbn, count) {
-            var updated = false;
+            let updated = false;
             items.forEach(function(item) {
                 if(item.isbn === isbn) {
                     item.count = count;
@@ -22,7 +22,7 @@ module.exports = function() {
             return Promise.resolve(items);
         },
         getCount: function (isbn) {
-            var foundItemCount = null;
+            let foundItemCount = null;
             items.forEach(function(item) {
                 if(item.isbn === isbn) {
                     foundItemCount = item.count;

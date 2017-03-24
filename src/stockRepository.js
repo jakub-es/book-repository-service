@@ -1,5 +1,4 @@
-const MongoClient = require('mongodb').MongoClient
-    , assert = require('assert');
+const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
 const url = 'mongodb://localhost:27017/books';
