@@ -1,4 +1,4 @@
-const mongoRepository = require('./stockRepository');
+const mongoRepository = require('./stockRepository')();
 const app = require('./index')(mongoRepository);
 
 app.listen(3001, function () {
