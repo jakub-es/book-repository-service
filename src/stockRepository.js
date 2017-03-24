@@ -23,9 +23,15 @@ let repository = {
             return collection.find({}).maxTimeMS(1000).toArray()
         })
     },
-    findOne: function (isbn) {
+    getCount: function (isbn) {
         return collectionPromise.then(function (collection) {
             return collection.find({"isbn": isbn}).limit(1).next();
+        }).then(function (result) {
+            if (result) {
+                return result.count;
+            } else {
+                return null;
+            }
         })
     }
 };

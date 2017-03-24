@@ -30,7 +30,7 @@ app.get('/stock', function (req, res, next) {
 
 app.get('/stock/:isbn', function (req, res, next) {
     let isbn = req.param('isbn');
-    repository.findOne(isbn).then(function (results) {
+    repository.getCount(isbn).then(function (results) {
         if (results != null) {
             res.json(results);
         } else {
