@@ -7,7 +7,8 @@
     "start": "node src/server.js",
     "test": "mocha",
     "lint": "jshint --exclude=node_modules/** src",
-    "test:xunit": "npm run test -- --reporter xunit"
+    "test:xunit": "npm run test -- --reporter xunit",
+    "watch": "nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "jshint": "2.9.4",
     "mocha": "3.2.0",
+    "nodemon": "1.11.0",
     "supertest": "3.0.0"
   }
 }

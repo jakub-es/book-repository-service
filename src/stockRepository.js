@@ -2,7 +2,7 @@ module.exports = function () {
 
     const MongoClient = require('mongodb').MongoClient;
     // Connection URL
-    const url = 'mongodb://localhost:27017/books';
+    let url = process.env.MONGODB_URI || 'mongodb://localhost:27017/books';
 
     let connectionPromise = MongoClient.connect(url);
     let collectionPromise = connectionPromise.then(function (db) {
